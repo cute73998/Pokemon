@@ -1,0 +1,165 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;900&display=swap" rel="stylesheet">
+    <title>Pokémon Navigation PRO</title>
+    <style>
+        /* CSS cho Navbar theo phong cách Pokémon */
+        .pokemon-navbar {
+            /* Chuyển sang màu Xanh Navy đậm, chuyên nghiệp */
+            background: linear-gradient(90deg, #1C2E4A 0%, #293D55 100%);
+            /* [cite: 2] */
+            /* XÓA VIỀN VÀNG: border-bottom: 5px solid #D9B300; */
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.9);
+            /* Bóng đổ sâu hơn  */
+            z-index: 1000;
+            /* [cite: 5] */
+        }
+
+        .nav-link-item {
+            /* Thiết lập ban đầu cho các mục menu */
+            display: flex;
+            /* [cite: 6] */
+            align-items: center;
+            /* [cite: 7] */
+            padding: 10px 25px;
+            border-radius: 10px;
+            text-decoration: none;
+            color: #FFFFFF !important;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 900;
+            font-size: 1.2rem;
+            text-shadow: 2px 2px 0 #000;
+            /* [cite: 8] */
+            transition: all 0.2s ease-in-out;
+            /* Hiệu ứng 3D nhẹ ban đầu */
+            transform: translateY(0);
+            box-shadow: 0 4px 0 #333333;
+            /* Bóng mờ 3D màu xám/đen [cite: 9] */
+        }
+
+        /* HIỆU ỨNG CHUYÊN NGHIỆP: Nâng và Đổi màu khi Hover */
+        .nav-link-item:hover {
+            color: #FFD700 !important;
+            /* Chữ chuyển sang vàng lấp lánh [cite: 10] */
+            background-color: rgba(0, 0, 0, 0.5);
+            /* Nền tối hơn [cite: 11] */
+            transform: translateY(-2px);
+            /* Nâng mục lên, tạo cảm giác được chọn [cite: 12] */
+            box-shadow: 0 6px 0 #D9B300;
+            /* Đổi bóng 3D sang Vàng Đồng [cite: 13] */
+            text-shadow: 2px 2px 0 #333;
+            /* Bóng chữ tối hơn [cite: 14] */
+        }
+
+        /* Hiệu ứng khi nhấn (giống nút bấm) */
+        .nav-link-item:active {
+            transform: translateY(2px);
+            /* Nhấn chìm mục xuống [cite: 15] */
+            box-shadow: 0 2px 0 #333333;
+            /* Giảm bóng 3D [cite: 16] */
+        }
+
+        .nav-link-item img {
+            width: 35px !important;
+            /* [cite: 17] */
+            height: 35px !important;
+            /* [cite: 17] */
+            margin-right: 8px;
+            filter: drop-shadow(0 0 5px #FFFFFF);
+            /* Hiệu ứng sáng trắng nhẹ cho icon [cite: 18] */
+        }
+
+        .nav-link-item h2 {
+            font-size: 1.2rem;
+            margin-bottom: 0;
+            /* [cite: 19] */
+            font-weight: 900;
+        }
+
+        /* CSS CHO AVATAR */
+        .user-avatar-navbar {
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            border: 3px solid #FFD700;
+            object-fit: cover;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .user-avatar-navbar:hover {
+            transform: scale(1.1);
+        }
+
+        /* Vùng chứa avatar (để căn giữa) */
+        .avatar-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="container-fluid pokemon-navbar py-3 fixed-top d-flex justify-content-center align-items-center">
+        <ul class="d-flex justify-content-center list-unstyled gap-5 mb-0">
+
+            <li class="nav-item">
+                <a href="/pokemon/homepage" class="nav-link-item">
+                    <img src="/images/hinhnen2.png" alt="Poké Ball Logo">
+
+                    <h2>BẮT POKÉMON</h2>
+                    </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="/pokemon/inventory" class="nav-link-item">
+                    <img src="/images/inventory.png" alt="Ba Lô Icon">
+
+                    <h2>BA LÔ</h2>
+                    </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="/pokemon/information" class="nav-link-item">
+                    <img src="/images/information.png" alt="Thông Tin Icon">
+
+                    <h2>THÔNG TIN</h2>
+                    </a>
+            </li>
+            <li class="nav-item">
+                <a href="/pokemon/dictionary" class="nav-link-item">
+                    <img src="/images/tudien.png" alt="Từ điển Icon">
+
+                    <h2>TỪ ĐIỂN POKÉMON</h2>
+                    </a>
+            </li>
+            <li class="nav-item">
+                <a href="/pokemon" class="nav-link-item">
+                    <img src="/images/logout.png" alt="Từ điển Icon">
+                    <h2>ĐĂNG XUẤT</h2>
+                </a>
+            </li>
+        </ul>
+
+        <% if (user) { %>
+            <div class="position-absolute end-0 me-5 avatar-container">
+                <a href="/pokemon/information">
+                    <img src="<%= user.avatar || '/images/default_avatar.png' %>" alt="<%= user.name %> Avatar"
+                        class="user-avatar-navbar">
+                </a>
+            </div>
+        <% } %>
+
+    </nav>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

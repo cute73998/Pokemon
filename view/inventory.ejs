@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Poppins:wght@400;700;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <title>Pokemon Super</title>
+    <style>
+        /* CSS Cơ bản giống homepage */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-image: url('/images/background.png'); /* Giả định dùng chung background */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
+
+        /* Tiêu đề trang */
+        .page-title {
+            text-shadow: 4px 4px 0 #000;
+            letter-spacing: 2px;
+            color: #FFD700; /* Màu Vàng Gold nổi bật */
+            border-bottom: 5px solid #800020;
+            padding-bottom: 15px;
+        }
+
+        /* --- THẺ POKÉMON TRONG KHO (.inventory-card) --- */
+        .inventory-card {
+            background: #292f3d; /* Nền xám đậm */
+            color: #FFFFFF;
+            border: 5px solid #4B0082; /* Viền Tím đậm */
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.7);
+            cursor: pointer;
+            height: 100%; /* Đảm bảo chiều cao đồng nhất trong lưới */
+        }
+
+        .inventory-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.9), 0 0 15px #FFD700; /* Bóng sáng Vàng Gold */
+        }
+
+        /* Phần đầu thẻ (Tên Pokémon) */
+        .card-header-inventory {
+            background: linear-gradient(90deg, #800020 0%, #4B0082 100%); /* Gradient Đỏ-Tím */
+            border-bottom: 3px solid #D9B300; /* Viền Vàng Đồng */
+            color: #FFFFFF;
+            text-shadow: 2px 2px 0 #000000;
+        }
+
+        /* Avatar Pokémon trong kho */
+        .inventory-avatar {
+            background-color: #ffffff;
+            max-height: 150px;
+            object-fit: contain;
+            border: 3px solid #cccccc;
+            border-radius: 8px;
+            padding: 10px;
+        }
+
+        /* Biệt danh */
+        .nickname {
+            font-style: italic;
+            font-weight: 700;
+            color: #1E90FF; /* Xanh Dương Sáng */
+            text-shadow: 1px 1px 1px #000;
+        }
+
+        /* Level Badge */
+        .level-badge-inventory {
+            font-family: 'Press Start 2P', cursive;
+            background-color: #4CAF50 !important;
+            padding: 0.3rem 0.6rem !important;
+            box-shadow: 1px 1px 0 #388E3C;
+            font-size: 0.8rem;
+        }
+
+        /* Thông số ATK/DEF/Catch Rate */
+        .inventory-stat-value {
+            font-weight: 900;
+        }
+        .inventory-stat-value.atack-color {
+            color: #FF4500; /* Đỏ Cam Rực */
+        }
+        .inventory-stat-value.defend-color {
+            color: #1E90FF; /* Xanh Dương Sáng */
+        }
+        .inventory-stat-value.catch-rate-color {
+            color: #FFD700; /* Vàng Gold */
+        }
+        .describe-text {
+            font-size: 0.9rem;
+            font-style: italic;
+            color: #AAAAAA;
+            margin-top: 10px;
+        }
+        .spawn-rate-info {
+            font-size: 0.85rem;
+            color: #C0C0C0;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <%- include('navbar') %>
+
+    <div class="container py-5 mt-5">
+        
+        <h1 class="page-title text-center mb-5 fw-bold display-4" style="margin-top: 50px;">
+            <i class="bi bi-backpack-fill me-3"></i> KHO LƯU TRỮ POKÉMON
+        </h1>
+        
+        <div class="text-center text-white mb-4 fs-5 p-3 rounded" style="background-color: rgba(0, 0, 0, 0.5);">
+            Chào <%= user.name %>! Bạn đang sở hữu <%= userPokemons.length %> Pokémon.
+        </div>
+
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+            
+            <% if (userPokemons && userPokemons.length > 0) { %>
+                <% userPokemons.forEach(pokemon => { %>
+                
+                <div class="col">
+                    <div class="inventory-card">
+                        <div class="card-header-inventory text-center py-2">
+                            <h5 class="name mb-0 text-uppercase fw-bold fs-5">
+                                <%= pokemon.name %>
+                            </h5>
+                            <p class="nickname mb-0 text-white-50">
+                                <%= pokemon.nickname %> 
+                                </p>
+                        </div>
+
+                        <div class="card-body p-3 text-center">
+                            <img src="<%= pokemon.avatar %>" class="inventory-avatar img-fluid mb-3" alt="<%= pokemon.name %> avatar">
+                            
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <p class="mb-0 fw-bold text-white">Level:</p>
+                                <span class="level-badge-inventory badge rounded-pill">
+                                    <%= pokemon.level %>
+                                </span>
+                            </div>
+
+                            <hr class="my-2 border-secondary">
+                            
+                            <div class="row text-center mt-3">
+                                <div class="col-4 border-end border-secondary">
+                                    <h6 class="mb-1 fw-bolder text-white-50 fs-6">ATK <i class="bi bi-sword"></i></h6>
+                                    <span class="inventory-stat-value atack-color fs-4">
+                                        <%= pokemon.atack %>
+                                    </span>
+                                </div>
+                                <div class="col-4 border-end border-secondary">
+                                    <h6 class="mb-1 fw-bolder text-white-50 fs-6">DEF <i class="bi bi-shield-fill"></i></h6>
+                                    <span class="inventory-stat-value defend-color fs-4">
+                                        <%= pokemon.defend %>
+                                    </span>
+                                </div>
+                                <div class="col-4">
+                                    <h6 class="mb-1 fw-bolder text-white-50 fs-6">SPAWN <i class="bi bi-arrow-down-up"></i></h6>
+                                    <span class="inventory-stat-value catch-rate-color fs-4">
+                                        <%= pokemon.catch_rate %>
+                                    </span>
+                                </div>
+                            </div>
+                            
+                            <hr class="my-2 border-secondary">
+                            
+                            <div class="text-start">
+                                <p class="describe-text">
+                                    "<%= pokemon.describe %>"
+                                </p>
+                            </div>
+                          
+                        </div>
+                        
+                    </div>
+                </div>
+                
+                <% }) %>
+            <% } else { %>
+                <div class="col-12 text-center">
+                    <div class="alert alert-warning p-4 fw-bold" style="background-color: #3d465c; color: #FFD700; border: 2px dashed #D9B300;">
+                        <i class="bi bi-x-octagon-fill me-2"></i> Kho của bạn hiện chưa có Pokémon nào. Hãy Bắt ngay!
+                    </div>
+                </div>
+            <% } %>
+
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Poppins:wght@400;700;900&display=swap"
+        rel="stylesheet">
+    <title>Pokemon Super</title>
+    <style>
+        /* Thiết lập font cho toàn trang (sử dụng Poppins hiện đại, dễ đọc) */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-image: url('/images/background.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+
+        }
+
+        /* --- THÔNG BÁO LUẬT CHƠI (RULE ALERT) --- */
+        .rule-alert {
+            position: fixed;
+            /* Cố định vị trí trên màn hình */
+            bottom: 20px;
+            left: 20px;
+            z-index: 1000;
+            max-width: 480px;
+            /* Tăng chiều rộng tối đa */
+            background: linear-gradient(145deg, #4B0082 0%, #800020 100%);
+            /* Nền Tím Đỏ hợp tông */
+            color: #FFD700;
+            border: 4px solid #FFD700;
+            /* Viền dày hơn */
+            border-radius: 15px;
+            /* Bo góc mềm hơn */
+            padding: 20px 25px;
+            /* Tăng padding */
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.9);
+            animation: pulse-rule 2s infinite;
+            /* Dùng Poppins cho nội dung */
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .rule-alert h5 {
+            /* GIỮ: Press Start 2P cho TIÊU ĐỀ để tạo điểm nhấn retro */
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1rem;
+            /* Tăng kích thước tiêu đề */
+            color: #FFFFFF;
+            text-shadow: 1px 1px 0 #000;
+            margin-bottom: 12px;
+            /* Tăng khoảng cách dưới tiêu đề */
+        }
+
+        .rule-alert p {
+            font-size: 1.1rem;
+            /* Tăng kích thước chữ nội dung lên đáng kể */
+            line-height: 1.5;
+            font-weight: 700;
+            color: #FFD700;
+            /* Nội dung chính màu Vàng Gold */
+        }
+
+        .rule-alert .text-white-50 {
+            font-size: 0.9rem !important;
+            /* Chi tiết nhỏ hơn nhưng vẫn dễ đọc */
+            font-weight: 500;
+        }
+
+        /* Keyframes giữ nguyên */
+        @keyframes pulse-rule {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.02);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* --- THÔNG BÁO BẮT THÀNH CÔNG/THẤT BẠI TÙY CHỈNH --- */
+        .custom-alert {
+            position: fixed;
+            /* Cố định vị trí */
+            top: 50%;
+            /* Đẩy xuống giữa chiều dọc */
+            left: 50%;
+            /* Đẩy sang giữa chiều ngang */
+            transform: translate(-50%, -50%);
+            /* Dịch chuyển ngược lại 50% kích thước để căn chính giữa */
+            z-index: 1060;
+            /* Đảm bảo nằm trên mọi thứ, kể cả navbar */
+            max-width: 400px;
+            /* Kích thước rộng hơn để dễ đọc */
+            padding: 20px 30px;
+            border-radius: 20px;
+            /* Bo góc mạnh */
+            font-size: 1.3rem;
+            /* Font lớn hơn */
+            font-weight: 900;
+            text-shadow: 2px 2px 2px #000;
+            box-shadow: 0 10px 0 #333333, 0 0 20px rgba(255, 215, 0, 0.7);
+            /* Bóng đổ 3D và bóng sáng */
+            transition: all 0.5s ease;
+            text-align: center;
+            /* Căn giữa văn bản */
+        }
+
+        .custom-alert.alert-success-catch {
+            /* Thành công: Màu tím đậm (Indigo) */
+            background: linear-gradient(180deg, #4B0082 0%, #6A5ACD 100%);
+            color: #FFFFFF;
+            border: 4px solid #FFD700;
+            /* Viền Vàng Gold dày hơn */
+        }
+
+        .custom-alert.alert-error-catch {
+            /* Thất bại: Màu đỏ đậm (Maroon/Dark Red) */
+            background: linear-gradient(180deg, #800020 0%, #B22222 100%);
+            color: #FFFFFF;
+            border: 4px solid #D9B300;
+            /* Viền Vàng Đồng dày hơn */
+        }
+
+        /* Nút đóng (Close button) trong alert */
+        .custom-alert .btn-close {
+            filter: invert(1);
+            /* Đảo màu nút đóng để nó nổi bật trên nền tối */
+            opacity: 0.9;
+            font-size: 1.2rem;
+            position: absolute;
+            /* Đặt nút đóng ở vị trí tuyệt đối */
+            top: 10px;
+            right: 10px;
+        }
+
+        /* Vị trí của thẻ .time (Alert) */
+        .alert.time {
+            margin-left: auto;
+            margin-right: auto;
+            max-width: 450px;
+            text-align: center;
+            padding: 15px;
+            margin-bottom: 25px;
+            /* Nền tối, chữ sáng, viền vàng */
+            background: linear-gradient(180deg, #4B0082 0%, #6A5ACD 100%);
+            color: #FFFFFF;
+            border: 3px solid #FFD700;
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-shadow: 1px 1px 1px #000;
+            /* Thêm bóng nhẹ cho chữ nổi hơn */
+            border-radius: 12px;
+            box-shadow: 0 4px 0 #333333;
+        }
+
+        /* Nâng lên khi có thông báo */
+        .alert.time:not(:empty) {
+            transform: translateY(-2px);
+
+        }
+
+        /* Đảm bảo icon trong time nổi bật */
+        .alert.time i {
+            color: #FFD700;
+            /* Màu vàng sáng cho icon đồng hồ */
+            margin-right: 8px;
+        }
+
+        /* --- THẺ POKÉMON CHÍNH (.pokemon-card) --- */
+        .pokemon-card {
+            background: #292f3d;
+            color: #FFFFFF;
+            /* Chữ mặc định trong thẻ là trắng tinh */
+            border: 8px solid #4B0082;
+            border-radius: 20px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.9) 0 0 20px #D9B300;
+            max-width: 450px;
+            cursor: pointer;
+        }
+
+        .pokemon-card:hover {
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9),
+                0 0 30px #FFD700;
+        }
+
+        /* --- PHẦN ĐẦU THẺ (Tên Pokémon) --- */
+        .card-header-pokemon {
+            background: linear-gradient(90deg, #800020 0%, #4B0082 100%);
+            border-bottom: 5px solid #D9B300;
+            color: #FFFFFF;
+            text-shadow: 3px 3px 0 #000000;
+            font-size: 2rem !important;
+        }
+
+        /* Avatar Pokémon */
+        .avatar {
+            background-color: #ffffff;
+            max-height: 300px !important;
+            object-fit: contain;
+            border: 5px solid #cccccc;
+            border-radius: 10px;
+
+        }
+
+        /* --- THÔNG SỐ (LEVEL, CATCH RATE LABELS) --- */
+        .card-body p {
+            color: #FFD700 !important;
+            /* Chữ Vàng Gold/Sáng nổi bật */
+            font-weight: 900;
+            text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.7);
+        }
+
+        .stat-badge {
+            font-family: 'Press Start 2P', cursive;
+            background-color: #4CAF50 !important;
+            padding: 0.5rem 1rem !important;
+            min-width: 100px;
+            box-shadow: 2px 2px 0 #388E3C;
+        }
+
+        /* --- MÔ TẢ POKÉMON --- */
+        .describe-pokemon {
+            font-style: italic;
+            border: 2px dashed #D9B300;
+            /* Viền Vàng Đồng */
+            padding: 10px;
+            background-color: #3d465c;
+            /* Nền xám đậm */
+            color: #FFFFFF;
+            /* Chữ trắng tinh */
+            font-weight: 500;
+        }
+
+        /* --- THỐNG KÊ ATK/DEF (.stat-block) --- */
+        .stat-block {
+            background: #1C2E4A;
+            color: #FFFFFF;
+            border: 2px solid #FFD700;
+            /* Viền Vàng Sáng */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+        }
+
+        .stat-block h6 {
+            /* ATK/DEF labels (ATK <i..>, DEF <i..>) */
+            color: #FFD700 !important;
+            /* Chữ Vàng sáng */
+            text-shadow: 1px 1px 1px #000;
+        }
+
+        /* ATK Value (Giá trị số) */
+        .stat-block .atack {
+            color: #FF4500 !important;
+            /* ATK: Đỏ Cam Rực (Sáng) */
+            text-shadow: 1px 1px 3px #000;
+        }
+
+        /* DEF Value (Giá trị số) */
+        .stat-block .defend {
+            color: #1E90FF !important;
+            /* DEF: Xanh Dương Sáng (Sáng) */
+            text-shadow: 1px 1px 3px #000;
+        }
+
+        /* --- NÚT BẮT NGAY --- */
+        .catch-button {
+            background: linear-gradient(180deg, #800020 0%, #4B0082 100%);
+            border: 3px solid #D9B300;
+            box-shadow: 0 5px 0 #330000, 0 0 10px rgba(128, 0, 32, 0.7);
+        }
+
+        .catch-button:active {
+            box-shadow: 0 1px 0 #330000;
+            transform: translateY(4px);
+
+        }
+    </style>
+</head>
+
+<body>
+    <%- include('navbar') %>
+        <div class="rule-alert">
+            <h5><i class="bi bi-exclamation-octagon-fill me-2"></i> LUẬT BẮT POKÉMON</h5>
+            <p class="mb-0">
+                <strong>Cảnh báo: </strong>  Nếu Pokémon mới xuất hiện mà bạn chưa kịp bắt, việc <strong>Đăng
+                    Xuất</strong> hoặc <strong>Làm Mới Trang (Reload)</strong> sẽ khiến Pokémon đó <strong>CHẠY
+                    TRỐN</strong> ngay lập tức và nút sẽ hiện <strong>ĐANG CHỜ...</strong>!
+            </p>
+            <p class="mb-0 mt-2 text-white-50" style="font-size: 0.85rem;">
+                (Phải bắt hoặc chờ thời gian cooldown kết thúc.)
+            </p>
+        </div>
+
+        <!-- THÔNG BÁO BẮT POKÉMON -->
+        <div class="notification-container" style="margin: 97px;">
+            <% if (success_catch && success_catch.length> 0) { %>
+                <% success_catch.forEach(msg=> { %>
+                    <div class="alert custom-alert alert-success-catch alert-dismissible fade show" role="alert">
+                        <strong>🎉 BẮT THÀNH CÔNG!</strong><br>
+                        <%= msg %>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    <% }) %>
+                        <% } %>
+
+                            <% if (error_catch && error_catch.length> 0) { %>
+                                <% error_catch.forEach(msg=> { %>
+                                    <div class="alert custom-alert alert-error-catch alert-dismissible fade show"
+                                        role="alert">
+                                        <strong>😢 BẮT THẤT BẠI!</strong><br>
+                                        <%= msg %>
+                                            <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                                aria-label="Close"></button>
+                                    </div>
+                                    <% }) %>
+                                        <% } %>
+        </div>
+
+        <div class="container" style="margin-top: 30px;">
+            <h1 class="text-center mb-5 text-white fw-bold display-4"
+                style="text-shadow: 4px 4px 0 #000; letter-spacing: 2px;">
+                Chào mừng, <%= user.name %>!
+            </h1>
+
+            <div class="alert alert-success time" style="width: 500px;" role="alert">
+            </div>
+
+            <div class="pokemon-card-container d-flex justify-content-center">
+
+                <div class="pokemon-card mb-5" id="current-pokemon-display">
+                    <div class="card-header-pokemon text-white text-center fw-bold py-3">
+                        <h4 class="name mb-0 text-uppercase fs-2">
+                            pokemon.name
+                        </h4>
+                    </div>
+
+                    <img src="default" class="avatar card-img-top p-4" alt="pokemon avatar" [cite_start][cite: 4, 5]
+                        style="max-height: 300px; object-fit: contain;">
+
+                    <div class="card-body p-4">
+
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <p class="card-text mb-0 text-dark fw-bold fs-5">Level:</p>
+                            <span class="level stat-badge badge rounded-pill fs-5">
+                                pokemon_level
+                            </span>
+                        </div>
+
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <p class="card-text mb-0 text-dark fw-bold fs-5">Catch Rate:</p>
+                            <span class="catch_rate stat-badge badge rounded-pill fs-5">
+                                pokemon_catch_rate
+                            </span>
+                        </div>
+
+                        <hr class="my-3">
+
+                        <p class="describe describe-pokemon card-text text-dark text-center">
+                            pokemon_describe
+                        </p>
+
+                        <hr class="my-3">
+
+                        <div class="d-flex justify-content-between text-center stat-block p-3 rounded">
+                            <div class="p-2 border-end border-dark w-50">
+                                <h6 class="text-danger mb-1 fw-bolder fs-5">ATK <i class="bi bi-sword"></i></h6>
+                                <span class="atack fs-3 fw-bolder text-danger">
+                                    pokemon_atack
+                                </span>
+                            </div>
+                            <div class="p-2 w-50">
+                                <h6 class="text-primary mb-1 fw-bolder fs-5">DEF <i class="bi bi-shield-fill"></i></h6>
+                                <span class="defend fs-3 fw-bolder text-primary">
+                                    pokemon_defend
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-footer text-center p-4">
+                        <button onclick="window.location.href='/pokemon/catch'"
+                            class="catch_button btn btn-danger btn-lg w-100 fw-bolder fs-4 d-flex justify-content-center align-items-center"
+                            <%=(success_catch && success_catch.length> 0) || (error_catch && error_catch.length > 0)
+                            ? 'disabled'
+                            : '' %>
+                            >
+                            <img src="/images/hinhnen2.png" alt="Pokeball"
+                                style="height: 35px; margin-left: 10px; filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.8));">
+
+                            <span class="catch_span">
+                                <% if (success_catch && success_catch.length> 0) { %>
+                                    BẮT THÀNH CÔNG!
+                                    <% } else if (error_catch && error_catch.length> 0) { %>
+                                        BẮT THẤT BẠI!
+                                        <% } else { %>
+                                            BẮT NGAY!
+                                            <% } %>
+                            </span>
+
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <script>
+            const UPDATE_INTERVAL = 5 * 60 * 1000;
+            const name = document.querySelector('.name');
+            const level = document.querySelector('.level');
+            const catch_rate = document.querySelector('.catch_rate');
+            const describe = document.querySelector('.describe');
+            const atack = document.querySelector('.atack');
+            const defend = document.querySelector('.defend');
+            const avatar = document.querySelector('.avatar');
+            const time = document.querySelector('.time');
+            const catch_button = document.querySelector('.catch_button');
+            const catch_span = document.querySelector('.catch_span');
+            let countDownInterval;
+
+            function stopInterval() {
+                if (countDownInterval) {
+                    clearInterval(countDownInterval);
+                    countDownInterval = null;
+                }
+            }
+
+            async function updatePokemon() {
+                stopInterval();
+                try {
+                    const pokemon = await fetch('/pokemon/random-pokemon');
+                    const storedPokemonResponse = await fetch('/pokemon/last-pokemon');
+                    const storedPokemon = await storedPokemonResponse.json();
+                    const clone = pokemon.clone();
+
+                    if (pokemon.status === 429) {
+                        const errorData = await clone.json();
+                        let remainingSeconds = Math.ceil(errorData.remainingTime / 1000); // Chuyển đổi từ milliseconds sang seconds
+                        // lấy đổi tượng pokemon từ localStorage và đổi thanh json về lại object
+                        if (storedPokemon) {
+                            name.innerText = storedPokemon.name.toUpperCase();
+                            level.innerText = storedPokemon.level;
+                            catch_rate.innerText = storedPokemon.catch_rate;
+                            describe.innerText = storedPokemon.describe;
+                            atack.innerText = storedPokemon.atack;
+                            defend.innerText = storedPokemon.defend;
+                            avatar.src = storedPokemon.avatar;
+                        }
+
+                        if (remainingSeconds > 0) {
+                            // THÊM: KHÓA NÚT KHI ĐANG TRONG COOLDOWN (429)
+                            catch_button.disabled = true;
+                            catch_span.innerText = 'ĐANG CHỜ...'; // Tùy chọn: đổi văn bản
+
+                            //Khởi động bộ đếm ngược
+                            countDownInterval = setInterval(() => {
+                                remainingSeconds--;
+                                if (remainingSeconds <= 0) {
+                                    stopInterval();
+                                    time.innerHTML = `<i class="bi bi-hourglass-split"></i> POKÉMON SẴN SÀNG!`;
+                                    updatePokemon();
+                                }
+                                else {
+                                    time.innerHTML = `<i class="bi bi-hourglass-bottom"></i> COOLDOWN: ${remainingSeconds} giây`;
+                                }
+                            }, 1000);
+                        }
+                        else {
+                            catch_button.disabled = false;
+                            catch_span.innerText = 'BẮT NGAY!';
+                            time.innerHTML = `<i class="bi bi-hourglass-split"></i> POKÉMON SẴN SÀNG!`;
+                        }
+                    }
+
+
+                    const data = await pokemon.json();
+                    name.innerText = data.name.toUpperCase();
+                    level.innerText = data.level;
+                    catch_rate.innerText = data.catch_rate;
+                    describe.innerText = data.describe;
+                    atack.innerText = data.atack;
+                    defend.innerText = data.defend;
+                    avatar.src = data.avatar;
+                    time.innerText = `Vui lòng chờ 5 phút trước khi xuất hiện Pokémon mới.`;
+                    catch_span.innerText = 'BẮT NGAY!';
+                    catch_button.disabled = false;
+                    const COOLDOWN = 5 * 60 * 1000; // 5 minutes in seconds
+                    // setTimeout(updatePokemon, COOLDOWN);
+                } catch (error) {
+                    console.error('Error fetching random pokemon:', error);
+                }
+            }
+
+            updatePokemon();
+        </script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</body>
+
+</html>

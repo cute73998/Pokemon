@@ -1,0 +1,388 @@
+// view/information.ejs
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Poppins:wght@400;700;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <title>Thông tin Cá nhân - <%= user.username %>
+    </title>
+
+    <style>
+        /* CSS Cơ bản & Tông màu Game Pokémon */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-image: url('/images/background.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
+
+        .page-title {
+            text-shadow: 5px 5px 0 #000;
+            letter-spacing: 3px;
+            color: #FFD700;
+            border-bottom: 6px solid #800020;
+            padding-bottom: 15px;
+            font-family: 'Press Start 2P', cursive;
+            margin-top: 120px;
+        }
+
+        /* --- CARD CHÍNH --- */
+        .profile-card {
+            background: #292f3d;
+            color: #FFFFFF;
+            border: 8px solid #4B0082;
+            border-radius: 25px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.9);
+            padding: 2rem;
+        }
+
+        /* --- KHUNG HỒ SƠ HUẤN LUYỆN VIÊN --- */
+        .trainer-profile-panel {
+            background-color: #1C2E4A;
+            border: 3px solid #800020;
+            border-radius: 15px;
+            padding: 1rem;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+
+        /* --- AVATAR DISPLAY --- */
+        .avatar-placeholder {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background-color: #FFFFFF;
+            border: 5px solid #FFD700;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
+            margin: 0 auto 15px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+        
+        .avatar-placeholder:hover {
+            transform: scale(1.05);
+        }
+
+        .avatar-placeholder img { 
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .trainer-name {
+            font-family: 'Press Start 2P', cursive;
+            color: #FFD700;
+            text-shadow: 2px 2px 0 #000;
+            font-size: 1.2rem;
+        }
+
+        /* --- KHUNG CHỈ SỐ GAME --- */
+        .game-stats-panel {
+            background-color: #3d465c;
+            border: 3px solid #FFD700;
+            border-radius: 15px;
+            padding: 1.5rem;
+        }
+
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px dashed #5a667d;
+        }
+
+        .stat-item:last-child {
+            border-bottom: none;
+        }
+
+        .stat-label {
+            font-weight: 700;
+            color: #D9B300;
+        }
+
+        .stat-value {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1rem;
+        }
+
+        /* --- EXP BAR --- */
+        .exp-bar-container {
+            height: 25px;
+            background-color: #5a667d;
+            border-radius: 5px;
+            border: 2px solid #D9B300;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            background-color: #00BFFF;
+            transition: width 0.6s ease;
+        }
+
+        /* Màu sắc chỉ số */
+        .level-color { color: #4CAF50; }
+        .elo-color { color: #FFD700; }
+        .atk-color { color: #FF4500; }
+        .def-color { color: #1E90FF; }
+
+        /* --- NÚT BẤM --- */
+        #edit-button {
+            background-color: #FFD700;
+            color: #4B0082;
+            border: 3px solid #4B0082;
+            box-shadow: 0 5px 0 #1C2E4A;
+            transition: all 0.1s;
+        }
+
+        #edit-button:active {
+            transform: translateY(3px);
+            box-shadow: none;
+        }
+
+        /* Form chỉnh sửa */
+        #edit-mode .form-control {
+            background-color: #3d465c !important;
+            border-color: #800020 !important;
+            color: #FFD700 !important;
+        }
+
+        .btn-save, .btn-cancel {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.8rem;
+        }
+
+        .btn-save {
+            background-color: #4CAF50;
+            border: 2px solid #388E3C;
+            box-shadow: 0 4px 0 #388E3C;
+        }
+
+        .btn-cancel {
+            background-color: #800020;
+            border: 2px solid #4B0082;
+            box-shadow: 0 4px 0 #4B0082;
+        }
+    </style>
+</head>
+
+<body>
+    <%- include('navbar.ejs') %>
+
+    <div class="container pb-5">
+        <h1 class="page-title text-center mb-5 fw-bold display-5">
+            <i class="bi bi-person-badge-fill me-3"></i> HỒ SƠ HUẤN LUYỆN VIÊN
+        </h1>
+
+        <div class="row justify-content-center">
+            <div class="col-md-10 col-lg-8">
+                <div class="profile-card">
+
+                    <% if (message) { %>
+                        <div id="alert-message"
+                            class="alert alert-<%= message.type %> alert-dismissible fade show fw-bold"
+                            role="alert">
+                            <i class="bi bi-info-circle-fill me-2"></i>
+                            <%= message.text %>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                aria-label="Close"></button>
+                        </div>
+                    <% } %>
+
+                    <div id="display-mode">
+
+                        <div class="row g-4 mb-4">
+
+                            <div class="col-md-4">
+                                <div class="trainer-profile-panel h-100">
+                                    <h5 class="text-info fw-bold mb-3 border-bottom pb-2">TRAINER INFO</h5>
+
+                                    <div class="avatar-placeholder">
+                                        <img src="<%= user.avatar || '/images/default_avatar.png' %>" 
+                                             alt="Avatar Người dùng">
+                                    </div>
+
+                                    <p class="trainer-name mb-1">
+                                        <%= user.name.toUpperCase() %>
+                                    </p>
+                                    <p class="text-white-50 small mb-0">@<%= user.username %>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="col-md-8">
+                                <div class="game-stats-panel h-100">
+                                    <h5 class="text-warning fw-bold mb-3 border-bottom pb-2"><i
+                                            class="bi bi-gear-fill me-2"></i> CHỈ SỐ GAME</h5>
+
+                                    <% 
+                                    const MAX_EXP_TO_LEVEL_UP = 1000;
+                                    const exp_needed = MAX_EXP_TO_LEVEL_UP * (user.level || 1);
+                                    const exp_percent = Math.min(100, (user.exp / exp_needed) * 100);
+                                    %>
+                                    <div class="mb-3">
+                                        <div class="d-flex justify-content-between mb-1">
+                                            <span class="stat-label">EXP:</span>
+                                            <span class="text-white small">
+                                                <%= user.exp %> / <%= exp_needed %>
+                                            </span>
+                                        </div>
+                                        <div class="exp-bar-container">
+                                            <div class="progress-bar" role="progressbar"
+                                                style="width: <%= exp_percent %>%" 
+                                                aria-valuenow="<%= user.exp %>" aria-valuemin="0"
+                                                aria-valuemax="<%= exp_needed %>">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="stat-item">
+                                        <span class="stat-label">Cấp độ (Level)</span>
+                                        <span class="stat-value level-color">
+                                            <%= user.level %>
+                                        </span>
+                                    </div>
+
+                                    <div class="stat-item">
+                                        <span class="stat-label">Điểm ELO (Rank)</span>
+                                        <span class="stat-value elo-color">
+                                            <%= user.elo %>
+                                        </span>
+                                    </div>
+
+                                    <div class="stat-item">
+                                        <span class="stat-label">Sát thương cơ bản (ATK)</span>
+                                        <span class="stat-value atk-color">
+                                            <%= user.base_atack %>
+                                        </span>
+                                    </div>
+
+                                    <div class="stat-item">
+                                        <span class="stat-label">Phòng thủ cơ bản (DEF)</span>
+                                        <span class="stat-value def-color">
+                                            <%= user.base_defend %>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2 mt-4">
+                            <button id="edit-button" type="button" class="btn btn-lg fw-bold"
+                                onclick="toggleMode(true)">
+                                <i class="bi bi-pencil-fill me-2"></i> CHỈNH SỬA PROFILE & MẬT KHẨU
+                            </button>
+                        </div>
+                    </div>
+
+
+                    <div id="edit-mode" style="display: none;">
+                        <h4 class="text-danger mb-4 fw-bold border-bottom pb-2"><i
+                                class="bi bi-exclamation-triangle-fill me-2"></i> KHU VỰC BẢO MẬT</h4>
+                        
+                        <form action="/pokemon/information" method="POST" enctype="multipart/form-data"> 
+
+                            <div class="mb-3">
+                                <label for="avatar_file" class="form-label text-white fw-bold">Ảnh đại diện mới (Avatar)</label>
+                                <input type="file" class="form-control" id="avatar_file" name="avatar" accept="image/*">
+                                <small class="form-text text-muted text-warning">Kích thước tối đa 5MB. Định dạng: JPG, PNG, GIF. (Để trống nếu không muốn thay đổi)</small>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="name" class="form-label text-white fw-bold">Tên hiển thị mới (Name)</label>
+                                <input type="text" class="form-control" id="name" name="name"
+                                    value="<%= user.name %>" required>
+                                <small class="form-text text-muted text-warning">Bạn phải điền tên hiển thị (có thể giữ nguyên giá trị hiện tại).</small>
+                            </div>
+
+                            <hr class="border-secondary my-4"> 
+                            
+                            <div class="mb-3">
+                                <label for="new_password" class="form-label text-info fw-bold">Mật khẩu mới</label>
+                                <input type="password" class="form-control" id="new_password"
+                                    name="new_password" placeholder="Nhập mật khẩu mới">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="confirm_password" class="form-label text-info fw-bold">Xác nhận Mật khẩu mới</label>
+                                <input type="password" class="form-control" id="confirm_password"
+                                    name="confirm_password" placeholder="Xác nhận mật khẩu mới">
+                                <small class="form-text text-muted text-info">Để trống cả hai trường mật khẩu nếu bạn không muốn thay đổi mật khẩu.</small>
+                            </div>
+
+                            <hr class="border-danger my-4"> 
+                            
+                            <div class="mb-3">
+                                <label for="current_password"
+                                    class="form-label text-danger fw-bolder fs-6">Mật khẩu hiện tại <span
+                                        class="text-white">(Bắt buộc để lưu bất kỳ thay đổi nào)</span></label>
+                                <input type="password" class="form-control" id="current_password"
+                                    name="current_password" required
+                                    placeholder="Nhập mật khẩu hiện tại của bạn">
+                            </div>
+
+                            <div class="d-grid gap-2 mt-4 d-md-flex justify-content-md-end">
+                                <button type="button" class="btn btn-cancel btn-lg fw-bold flex-fill"
+                                    onclick="toggleMode(false)">
+                                    <i class="bi bi-x-circle-fill me-2"></i> HỦY BỎ
+                                </button>
+                                <button type="submit" class="btn btn-save btn-lg fw-bold flex-fill">
+                                    <i class="bi bi-save-fill me-2"></i> LƯU THAY ĐỔI
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function toggleMode(isEditMode) {
+            const displayDiv = document.getElementById('display-mode');
+            const editDiv = document.getElementById('edit-mode');
+            const alertDiv = document.getElementById('alert-message');
+
+            if (isEditMode) {
+                displayDiv.style.display = 'none';
+                editDiv.style.display = 'block';
+                if (alertDiv) { alertDiv.style.display = 'none'; }
+            } else {
+                displayDiv.style.display = 'block';
+                editDiv.style.display = 'none';
+                if (alertDiv) { alertDiv.style.display = 'block'; }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const alertDiv = document.getElementById('alert-message');
+
+            // Nếu có thông báo lỗi (alert-danger) sau khi submit, tự động chuyển sang Edit Mode
+            if (alertDiv && alertDiv.classList.contains('alert-danger')) {
+                toggleMode(true);
+            }
+
+            // Tự động đóng alert sau 5 giây nếu thành công
+            if (alertDiv && alertDiv.classList.contains('alert-success')) {
+                setTimeout(() => {
+                    const bsAlert = new bootstrap.Alert(alertDiv);
+                    bsAlert.close();
+                }, 5000);
+            }
+        });
+    </script>
+</body>
+
+</html>
