@@ -108,6 +108,27 @@
             color: #C0C0C0;
             margin-top: 5px;
         }
+        /* CSS CHO AVATAR */
+        .user-avatar-navbar {
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            border: 3px solid #FFD700;
+            object-fit: cover;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .user-avatar-navbar:hover {
+            transform: scale(1.1);
+        }
+
+        /* Vùng chứa avatar (để căn giữa) */
+        .avatar-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
     </style>
 </head>
 
@@ -121,7 +142,8 @@
         </h1>
         
         <div class="text-center text-white mb-4 fs-5 p-3 rounded" style="background-color: rgba(0, 0, 0, 0.5);">
-            Chào <%= user.name %>! Bạn đang sở hữu <%= userPokemons.length %> Pokémon.
+            Chào <img src="<%= user.avatar || '/images/default_avatar.png' %>" alt="<%= user.name %> Avatar"
+                        class="user-avatar-navbar"> <%= user.name %>! Bạn đang sở hữu <%= userPokemons.length %> Pokémon.
         </div>
 
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
