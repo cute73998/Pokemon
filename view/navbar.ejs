@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,6 +9,48 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;900&display=swap" rel="stylesheet">
     <title>Pokémon Navigation PRO</title>
     <style>
+        /* ĐIỀU CHỈNH CHUNG TRÊN MOBILE (DƯỚI 992px) */
+        @media (max-width: 991.98px) {
+
+            /* Giảm khoảng cách giữa các mục trên navbar */
+            .pokemon-navbar ul.gap-5 {
+                gap: 1.5rem !important;
+            }
+
+            /* Ẩn chữ, chỉ giữ lại icon */
+            .nav-link-item h2 {
+                display: none;
+            }
+
+            /* Giảm padding của nav-link-item */
+            .nav-link-item {
+                padding: 8px 15px;
+                box-shadow: 0 2px 0 #333333;
+                /* Giảm bóng */
+            }
+
+            /* Giảm kích thước icon */
+            .nav-link-item img {
+                width: 30px !important;
+                height: 30px !important;
+                margin-right: 0;
+                /* Xóa khoảng cách bên phải icon */
+            }
+
+            /* Dịch chuyển Avatar vào gần góc hơn */
+            .pokemon-navbar .avatar-container {
+                /* Đảm bảo avatar không bị đè lên menu */
+                right: 15px;
+                /* Dịch vào sát lề hơn */
+            }
+
+            /* Giảm kích thước avatar */
+            .user-avatar-navbar {
+                width: 45px;
+                height: 45px;
+            }
+        }
+
         /* CSS cho Navbar theo phong cách Pokémon */
         .pokemon-navbar {
             /* Chuyển sang màu Xanh Navy đậm, chuyên nghiệp */
@@ -116,7 +157,7 @@
                     <img src="/images/hinhnen2.png" alt="Poké Ball Logo">
 
                     <h2>BẮT POKÉMON</h2>
-                    </a>
+                </a>
             </li>
 
             <li class="nav-item">
@@ -124,7 +165,7 @@
                     <img src="/images/inventory.png" alt="Ba Lô Icon">
 
                     <h2>BA LÔ</h2>
-                    </a>
+                </a>
             </li>
 
             <li class="nav-item">
@@ -132,14 +173,14 @@
                     <img src="/images/information.png" alt="Thông Tin Icon">
 
                     <h2>THÔNG TIN</h2>
-                    </a>
+                </a>
             </li>
             <li class="nav-item">
                 <a href="/pokemon/dictionary" class="nav-link-item">
                     <img src="/images/tudien.png" alt="Từ điển Icon">
 
                     <h2>TỪ ĐIỂN POKÉMON</h2>
-                    </a>
+                </a>
             </li>
             <li class="nav-item">
                 <a href="/pokemon" class="nav-link-item">
@@ -156,7 +197,7 @@
                         class="user-avatar-navbar">
                 </a>
             </div>
-        <% } %>
+            <% } %>
 
     </nav>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

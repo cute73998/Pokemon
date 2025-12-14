@@ -18,7 +18,7 @@ app.use((req, res, next) => {
 const path = require('path');
 
 require('dotenv').config();
-const port = process.env.PORT;
+const port = process.env.PORT || 9993;
 
 app.use(express.urlencoded({extended: true}));
 

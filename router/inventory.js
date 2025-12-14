@@ -77,6 +77,24 @@ app.get('/inventory', async (req, res) => {
     })
 })
 
+app.delete('/delete/:id', async (req, res) => {
+    if (!req.session.user) {
+        return res.redirect('/pokemon');
+    }
+    const id = req.params.id;
+    const result = await queries.deleteUserPokemons(id);
+    if (result) {
+        const userPokemons = await queries.getUserPokemons(req.session.user.id);
+        res.render('inventory', {
+            userPokemons,
+            user: req.session.user
+        })
+    }
+    else {
+        res.send(`Lỗi khi xoá pokemon ở inventory với id: ${id}`)
+    }
+})
+
 app.get('/catch', async (req, res) => {
     if (!req.session.user || !req.session.user.id) {
         return res.status(401).json({ error: 'Unauthorized' });
@@ -282,5 +300,16 @@ app.get('/dictionary', async (req, res) => {
         res.status(500).send('Lỗi máy chủ khi tải dữ liệu Pokémon.');
     }
 });
+
+app.post('/update_nickname', async (req, res) => {
+    const { id, nickname } = req.body;
+    if (id && nickname) {
+        await queries.updateNickname(id, nickname);
+        res.redirect('/pokemon/inventory')
+    }
+    else {
+        res.redirect('/pokemon/inventory')
+    }
+})
 
 module.exports = app;

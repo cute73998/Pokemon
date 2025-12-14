@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Poppins:wght@400;700;900&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    
+
     <style>
         body {
             font-family: 'Poppins', sans-serif;
@@ -22,6 +21,34 @@
             min-height: 100vh;
             padding-top: 100px;
         }
+
+        @media (max-width: 575.98px) {
+
+            /* Đảm bảo tiêu đề không bị quá lớn */
+            .page-title {
+                font-size: 1.8rem !important;
+                letter-spacing: 1px;
+            }
+
+            /* Điều chỉnh font chữ trong card */
+            .pokemon-name {
+                font-size: 1rem;
+            }
+
+            .dict-avatar {
+                width: 100px;
+                height: 100px;
+            }
+
+            .stat-value {
+                font-size: 0.8rem;
+            }
+
+            .pokemon-describe {
+                font-size: 0.85rem;
+            }
+        }
+
 
         .page-title {
             text-shadow: 5px 5px 0 #000;
@@ -35,13 +62,15 @@
 
         /* --- CARD POKÉMON (DICT) --- */
         .pokemon-dict-card {
-            background: #292f3d; /* Nền xám đậm */
+            background: #292f3d;
+            /* Nền xám đậm */
             color: #FFFFFF;
-            border: 5px solid #4B0082; /* Viền Tím đậm */
+            border: 5px solid #4B0082;
+            /* Viền Tím đậm */
             border-radius: 15px;
             overflow: hidden;
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.7);
-            height: 100%; 
+            height: 100%;
             transition: transform 0.3s ease;
         }
 
@@ -63,7 +92,7 @@
         /* Ảnh Pokémon */
         .dict-avatar {
             /* Tăng kích thước ảnh lên đáng kể */
-            width: 250px; 
+            width: 250px;
             height: 250px;
             object-fit: contain;
             background-color: #FFFFFF;
@@ -93,12 +122,26 @@
         }
 
         /* Hiệu ứng màu cho chỉ số */
-        .level-color { color: #4CAF50;}
-        .atk-color { color: #FF4500;}
-        .def-color { color: #1E90FF;}
-        .rate-color { color: #FFD700;}
-        .spawn-color { color: #C0C0C0;}
-        
+        .level-color {
+            color: #4CAF50;
+        }
+
+        .atk-color {
+            color: #FF4500;
+        }
+
+        .def-color {
+            color: #1E90FF;
+        }
+
+        .rate-color {
+            color: #FFD700;
+        }
+
+        .spawn-color {
+            color: #C0C0C0;
+        }
+
         /* Mô tả */
         .pokemon-describe {
             font-size: 0.9rem;
@@ -118,105 +161,118 @@
             margin-bottom: 25px;
             border: 3px solid #D9B300;
         }
-        
     </style>
 </head>
 
 <body>
     <%- include('navbar.ejs') %>
 
-    <div class="container pb-5">
-        <h1 class="page-title text-center mb-5 fw-bold display-5">
-            <i class="bi bi-book-fill me-3"></i> TỪ ĐIỂN POKÉMON
-        </h1>
-        
-        <div class="dict-controls text-white">
-             <input type="text" id="pokemonSearch" class="form-control form-control-lg mb-3" placeholder="🔍 Nhập tên hoặc ID Pokémon để tìm kiếm..." style="background-color: #3d465c; color: #FFD700; border-color: #800020;">
-        </div>
+        <div class="container pb-5">
+            <h1 class="page-title text-center mb-5 fw-bold display-5">
+                <i class="bi bi-book-fill me-3"></i> TỪ ĐIỂN POKÉMON
+            </h1>
 
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4" id="pokemonGrid">
-            
-            <% allPokemons.forEach(pokemon => { %>
-                <div class="col" data-name="<%= pokemon.name.toLowerCase() %>" data-id="<%= pokemon.id %>">
-                    <div class="pokemon-dict-card text-center">
-                        <div class="card-header-dict py-2 text-uppercase">
-                            <%= pokemon.name %> (#<%= pokemon.id %>)
-                        </div>
-
-                        <div class="card-body p-3">
-                            <img src="<%= pokemon.avatar %>" alt="<%= pokemon.name %>" class="dict-avatar">
-
-                            <div class="stat-block row g-1 mb-3">
-                                <div class="col-6 p-1 border-end border-secondary">
-                                    <p class="stat-label mb-0">Cấp độ</p>
-                                    <span class="stat-value level-color"><%= pokemon.level %></span>
-                                </div>
-                                <div class="col-6 p-1">
-                                    <p class="stat-label mb-0">Catch Rate</p>
-                                    <span class="stat-value rate-color"><%= pokemon.catch_rate %></span>
-                                </div>
-                                <div class="col-6 p-1 border-end border-secondary border-top">
-                                    <p class="stat-label mb-0">ATK</p>
-                                    <span class="stat-value atk-color"><%= pokemon.atack %></span>
-                                </div>
-                                <div class="col-6 p-1 border-top">
-                                    <p class="stat-label mb-0">DEF</p>
-                                    <span class="stat-value def-color"><%= pokemon.defend %></span>
-                                </div>
-                            </div>
-                            
-                            <p class="stat-label mb-1">Tỷ lệ xuất hiện (Spawn Rate): 
-                                <span class="stat-value spawn-color"><%= pokemon.spawn_rate %></span>
-                            </p>
-
-                            <p class="pokemon-describe text-start">
-                                <%= pokemon.describe %>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            <% }); %>
-
-            <div class="col-12 text-center mt-5" id="noResults" style="display: none;">
-                <div class="alert alert-danger p-4 fw-bold" style="background-color: #800020; color: #FFD700; border: 2px dashed #FFD700;">
-                    <i class="bi bi-exclamation-octagon-fill me-2"></i> Không tìm thấy Pokémon nào khớp với tìm kiếm của bạn.
-                </div>
+            <div class="dict-controls text-white">
+                <input type="text" id="pokemonSearch" class="form-control form-control-lg mb-3"
+                    placeholder="🔍 Nhập tên hoặc ID Pokémon để tìm kiếm..."
+                    style="background-color: #3d465c; color: #FFD700; border-color: #800020;">
             </div>
 
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4" id="pokemonGrid">
+
+                <% allPokemons.forEach(pokemon=> { %>
+                    <div class="col" data-name="<%= pokemon.name.toLowerCase() %>" data-id="<%= pokemon.id %>">
+                        <div class="pokemon-dict-card text-center">
+                            <div class="card-header-dict py-2 text-uppercase">
+                                <%= pokemon.name %> (#<%= pokemon.id %>)
+                            </div>
+
+                            <div class="card-body p-3">
+                                <img src="<%= pokemon.avatar %>" alt="<%= pokemon.name %>" class="dict-avatar">
+
+                                <div class="stat-block row g-1 mb-3">
+                                    <div class="col-6 p-1 border-end border-secondary">
+                                        <p class="stat-label mb-0">Cấp độ</p>
+                                        <span class="stat-value level-color">
+                                            <%= pokemon.level %>
+                                        </span>
+                                    </div>
+                                    <div class="col-6 p-1">
+                                        <p class="stat-label mb-0">Catch Rate</p>
+                                        <span class="stat-value rate-color">
+                                            <%= pokemon.catch_rate %>
+                                        </span>
+                                    </div>
+                                    <div class="col-6 p-1 border-end border-secondary border-top">
+                                        <p class="stat-label mb-0">ATK</p>
+                                        <span class="stat-value atk-color">
+                                            <%= pokemon.atack %>
+                                        </span>
+                                    </div>
+                                    <div class="col-6 p-1 border-top">
+                                        <p class="stat-label mb-0">DEF</p>
+                                        <span class="stat-value def-color">
+                                            <%= pokemon.defend %>
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <p class="stat-label mb-1">Tỷ lệ xuất hiện (Spawn Rate):
+                                    <span class="stat-value spawn-color">
+                                        <%= pokemon.spawn_rate %>
+                                    </span>
+                                </p>
+
+                                <p class="pokemon-describe text-start">
+                                    <%= pokemon.describe %>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <% }); %>
+
+                        <div class="col-12 text-center mt-5" id="noResults" style="display: none;">
+                            <div class="alert alert-danger p-4 fw-bold"
+                                style="background-color: #800020; color: #FFD700; border: 2px dashed #FFD700;">
+                                <i class="bi bi-exclamation-octagon-fill me-2"></i> Không tìm thấy Pokémon nào khớp với
+                                tìm kiếm của bạn.
+                            </div>
+                        </div>
+
+            </div>
         </div>
-    </div>
 
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    
-    <script>
-        document.getElementById('pokemonSearch').addEventListener('keyup', function() {
-            const searchTerm = this.value.toLowerCase().trim();
-            const cards = document.querySelectorAll('#pokemonGrid .col');
-            let found = false;
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-            cards.forEach(card => {
-                const name = card.getAttribute('data-name');
-                const id = card.getAttribute('data-id');
+        <script>
+            document.getElementById('pokemonSearch').addEventListener('keyup', function () {
+                const searchTerm = this.value.toLowerCase().trim();
+                const cards = document.querySelectorAll('#pokemonGrid .col');
+                let found = false;
 
-                // Hiển thị nếu tên hoặc ID khớp
-                if (name && (name.includes(searchTerm) || id.includes(searchTerm))) {
-                    card.style.display = 'block';
-                    found = true;
+                cards.forEach(card => {
+                    const name = card.getAttribute('data-name');
+                    const id = card.getAttribute('data-id');
+
+                    // Hiển thị nếu tên hoặc ID khớp
+                    if (name && (name.includes(searchTerm) || id.includes(searchTerm))) {
+                        card.style.display = 'block';
+                        found = true;
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+
+                // Hiển thị thông báo không tìm thấy
+                const noResults = document.getElementById('noResults');
+                if (!found && searchTerm.length > 0) {
+                    noResults.style.display = 'block';
                 } else {
-                    card.style.display = 'none';
+                    noResults.style.display = 'none';
                 }
             });
-
-            // Hiển thị thông báo không tìm thấy
-            const noResults = document.getElementById('noResults');
-            if (!found && searchTerm.length > 0) {
-                noResults.style.display = 'block';
-            } else {
-                noResults.style.display = 'none';
-            }
-        });
-    </script>
+        </script>
 </body>
 
 </html>

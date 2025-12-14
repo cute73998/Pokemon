@@ -14,7 +14,8 @@
         /* CSS Cơ bản giống homepage */
         body {
             font-family: 'Poppins', sans-serif;
-            background-image: url('/images/background.png'); /* Giả định dùng chung background */
+            background-image: url('/images/background.png');
+            /* Giả định dùng chung background */
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -26,33 +27,40 @@
         .page-title {
             text-shadow: 4px 4px 0 #000;
             letter-spacing: 2px;
-            color: #FFD700; /* Màu Vàng Gold nổi bật */
+            color: #FFD700;
+            /* Màu Vàng Gold nổi bật */
             border-bottom: 5px solid #800020;
             padding-bottom: 15px;
         }
 
         /* --- THẺ POKÉMON TRONG KHO (.inventory-card) --- */
         .inventory-card {
-            background: #292f3d; /* Nền xám đậm */
+            background: #292f3d;
+            /* Nền xám đậm */
             color: #FFFFFF;
-            border: 5px solid #4B0082; /* Viền Tím đậm */
+            border: 5px solid #4B0082;
+            /* Viền Tím đậm */
             border-radius: 15px;
             overflow: hidden;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.7);
             cursor: pointer;
-            height: 100%; /* Đảm bảo chiều cao đồng nhất trong lưới */
+            height: 100%;
+            /* Đảm bảo chiều cao đồng nhất trong lưới */
         }
 
         .inventory-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.9), 0 0 15px #FFD700; /* Bóng sáng Vàng Gold */
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.9), 0 0 15px #FFD700;
+            /* Bóng sáng Vàng Gold */
         }
 
         /* Phần đầu thẻ (Tên Pokémon) */
         .card-header-inventory {
-            background: linear-gradient(90deg, #800020 0%, #4B0082 100%); /* Gradient Đỏ-Tím */
-            border-bottom: 3px solid #D9B300; /* Viền Vàng Đồng */
+            background: linear-gradient(90deg, #800020 0%, #4B0082 100%);
+            /* Gradient Đỏ-Tím */
+            border-bottom: 3px solid #D9B300;
+            /* Viền Vàng Đồng */
             color: #FFFFFF;
             text-shadow: 2px 2px 0 #000000;
         }
@@ -71,7 +79,8 @@
         .nickname {
             font-style: italic;
             font-weight: 700;
-            color: #1E90FF; /* Xanh Dương Sáng */
+            color: #1E90FF;
+            /* Xanh Dương Sáng */
             text-shadow: 1px 1px 1px #000;
         }
 
@@ -88,26 +97,35 @@
         .inventory-stat-value {
             font-weight: 900;
         }
+
         .inventory-stat-value.atack-color {
-            color: #FF4500; /* Đỏ Cam Rực */
+            color: #FF4500;
+            /* Đỏ Cam Rực */
         }
+
         .inventory-stat-value.defend-color {
-            color: #1E90FF; /* Xanh Dương Sáng */
+            color: #1E90FF;
+            /* Xanh Dương Sáng */
         }
+
         .inventory-stat-value.catch-rate-color {
-            color: #FFD700; /* Vàng Gold */
+            color: #FFD700;
+            /* Vàng Gold */
         }
+
         .describe-text {
             font-size: 0.9rem;
             font-style: italic;
             color: #AAAAAA;
             margin-top: 10px;
         }
+
         .spawn-rate-info {
             font-size: 0.85rem;
             color: #C0C0C0;
             margin-top: 5px;
         }
+
         /* CSS CHO AVATAR */
         .user-avatar-navbar {
             width: 65px;
@@ -129,100 +147,352 @@
             align-items: center;
             justify-content: center;
         }
+
+        /* --- CSS MỚI CHO CÁC NÚT HÀNH ĐỘNG (Hiệu ứng 3D chỉ hiện khi HOVER) --- */
+        .btn-action-base {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.75rem;
+            padding: 10px 15px;
+            text-transform: uppercase;
+            border-radius: 8px;
+            border: 4px solid;
+            transition: all 0.2s ease;
+            /* Chuyển động mượt mà hơn */
+            cursor: pointer;
+            width: 100%;
+            margin: 5px 0;
+            display: inline-block;
+            font-weight: bold;
+
+            /* TRẠNG THÁI MẶC ĐỊNH (FLAT/2D) */
+            transform: translateY(0);
+            box-shadow: none;
+            text-shadow: none;
+            /* Bỏ text-shadow mặc định để làm nổi bật ở trạng thái hover */
+        }
+
+        /* Nút DELETE (Màu Đỏ) */
+        .btn-delete {
+            background-color: #FF6347;
+            color: #FFFFFF;
+            border-color: #A52A2A;
+        }
+
+        /* Nút NICKNAME (Màu Vàng) */
+        .btn-nickname {
+            background-color: #FFD700;
+            color: #000000;
+            border-color: #B8860B;
+        }
+
+        /* --- HIỆU ỨNG 3D KHI HOVER --- */
+        .btn-delete:hover {
+            /* Hiệu ứng 3D nổi lên */
+            transform: translateY(-4px);
+            box-shadow: 0 8px 0 #A52A2A;
+            /* Hiện bóng 3D */
+            background-color: #FF7F50;
+            /* Sáng hơn một chút */
+            text-shadow: 2px 2px 0 #8B0000;
+            /* Hiện text-shadow */
+        }
+
+        .btn-nickname:hover {
+            /* Hiệu ứng 3D nổi lên */
+            transform: translateY(-4px);
+            box-shadow: 0 8px 0 #B8860B;
+            /* Hiện bóng 3D */
+            background-color: #FDD017;
+            /* Sáng hơn một chút */
+            text-shadow: 2px 2px 0 #FF8C00;
+            /* Hiện text-shadow */
+        }
+
+        /* --- HIỆU ỨNG NHẤN XUỐNG KHI CLICK/ACTIVE (Giữ nguyên) --- */
+        .btn-delete:active {
+            transform: translateY(4px);
+            /* Nhấn xuống */
+            box-shadow: 0 0px 0 #A52A2A;
+            /* Bóng biến mất */
+            background-color: #E73600;
+        }
+
+        .btn-nickname:active {
+            transform: translateY(4px);
+            /* Nhấn xuống */
+            box-shadow: 0 0px 0 #B8860B;
+            /* Bóng biến mất */
+            background-color: #D4AF37;
+        }
+
+        /* Vùng chứa nút (giữ nguyên) */
+        .action-buttons-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            padding: 15px 0 5px 0;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .update_nickname {
+            box-sizing: border-box;
+            /* <--- THÊM DÒNG NÀY */
+            margin-top: 10px;
+            background: #1a1a1a;
+            /* Nền form tối hơn */
+            padding: 10px;
+            border-radius: 6px;
+        }
+
+        /* --- CSS MỚI CHO FORM NHẬP NICKNAME --- */
+
+        .update_nickname {
+            margin-top: 10px;
+            background: #1a1a1a;
+            /* Nền form tối hơn */
+            padding: 10px;
+            border-radius: 6px;
+            border: 2px solid #4B0082;
+            /* Viền Tím đậm nổi bật */
+            box-shadow: 0 0 10px rgba(75, 0, 130, 0.7);
+            /* Bóng Tím Neon nhẹ */
+            display: flex;
+            /* Căn chỉnh các thành phần trên cùng một hàng */
+            gap: 5px;
+            align-items: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .update_nickname input[type="text"] {
+            /* Input field */
+            font-family: 'Poppins', sans-serif;
+            flex-grow: 1;
+            /* Cho phép input chiếm phần lớn không gian */
+            padding: 8px;
+            border: 2px solid #D9B300;
+            /* Viền Vàng Đồng */
+            border-radius: 4px;
+            background-color: #3d465c;
+            /* Nền input tối */
+            color: #FFFFFF;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+
+        .update_nickname input[type="text"]:focus {
+            /* Khi focus */
+            border-color: #FFD700;
+            /* Viền Vàng Gold */
+            box-shadow: 0 0 5px #FFD700;
+            /* Bóng sáng */
+            outline: none;
+        }
+
+        .update_nickname button[type="submit"] {
+            /* Nút LƯU */
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.7rem;
+            padding: 8px 12px;
+            background-color: #4CAF50;
+            /* Xanh lá */
+            color: #FFFFFF;
+            border: 3px solid #388E3C;
+            /* Viền xanh đậm */
+            border-radius: 6px;
+            cursor: pointer;
+            box-shadow: 0 4px 0 #388E3C;
+            /* Hiệu ứng 3D nhẹ */
+            transition: all 0.1s;
+            width: 100%;
+        }
+
+        .update_nickname button[type="submit"]:active {
+            /* Hiệu ứng nhấn xuống */
+            transform: translateY(3px);
+            box-shadow: 0 1px 0 #388E3C;
+        }
+        
     </style>
 </head>
 
 <body>
     <%- include('navbar') %>
 
-    <div class="container py-5 mt-5">
-        
-        <h1 class="page-title text-center mb-5 fw-bold display-4" style="margin-top: 50px;">
-            <i class="bi bi-backpack-fill me-3"></i> KHO LƯU TRỮ POKÉMON
-        </h1>
-        
-        <div class="text-center text-white mb-4 fs-5 p-3 rounded" style="background-color: rgba(0, 0, 0, 0.5);">
-            Chào <img src="<%= user.avatar || '/images/default_avatar.png' %>" alt="<%= user.name %> Avatar"
-                        class="user-avatar-navbar"> <%= user.name %>! Bạn đang sở hữu <%= userPokemons.length %> Pokémon.
-        </div>
+        <div class="container py-5 mt-5">
 
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
-            
-            <% if (userPokemons && userPokemons.length > 0) { %>
-                <% userPokemons.forEach(pokemon => { %>
-                
-                <div class="col">
-                    <div class="inventory-card">
-                        <div class="card-header-inventory text-center py-2">
-                            <h5 class="name mb-0 text-uppercase fw-bold fs-5">
-                                <%= pokemon.name %>
-                            </h5>
-                            <p class="nickname mb-0 text-white-50">
-                                <%= pokemon.nickname %> 
-                                </p>
+            <h1 class="page-title text-center mb-5 fw-bold display-4" style="margin-top: 50px;">
+                <i class="bi bi-backpack-fill me-3"></i> KHO LƯU TRỮ POKÉMON
+            </h1>
+
+            <div class="text-center text-white mb-4 fs-5 p-3 rounded" style="background-color: rgba(0, 0, 0, 0.5);">
+                Chào <img src="<%= user.avatar || '/images/default_avatar.png' %>" alt="<%= user.name %> Avatar"
+                    class="user-avatar-navbar">
+                <%= user.name %>! Bạn đang sở hữu <strong class="text-warning" style="font-size:25px;"><%= userPokemons.length %></strong> Pokémon.
+            </div>
+
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+
+                <% if (userPokemons && userPokemons.length> 0) { %>
+                    <% userPokemons.forEach(pokemon=> { %>
+
+                        <div class="col">
+                            <div class="inventory-card">
+                                <div class="card-header-inventory text-center py-2">
+                                    <h5 class="name mb-0 text-uppercase fw-bold fs-5">
+                                        <%= pokemon.name %>
+                                    </h5>
+                                    <p class="nickname mb-0 text-white-50">
+                                        <%= pokemon.nickname %>
+                                    </p>
+                                </div>
+
+                                <div class="card-body p-3 text-center">
+                                    <img src="<%= pokemon.avatar %>" class="inventory-avatar img-fluid mb-3"
+                                        alt="<%= pokemon.name %> avatar">
+
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <p class="mb-0 fw-bold text-white">Level:</p>
+                                        <span class="level-badge-inventory badge rounded-pill">
+                                            <%= pokemon.level %>
+                                        </span>
+                                    </div>
+
+                                    <hr class="my-2 border-secondary">
+
+                                    <div class="row text-center mt-3">
+                                        <div class="col-4 border-end border-secondary">
+                                            <h6 class="mb-1 fw-bolder text-white-50 fs-6">ATK <i
+                                                    class="bi bi-sword"></i></h6>
+                                            <span class="inventory-stat-value atack-color fs-4">
+                                                <%= pokemon.atack %>
+                                            </span>
+                                        </div>
+                                        <div class="col-4 border-end border-secondary">
+                                            <h6 class="mb-1 fw-bolder text-white-50 fs-6">DEF <i
+                                                    class="bi bi-shield-fill"></i></h6>
+                                            <span class="inventory-stat-value defend-color fs-4">
+                                                <%= pokemon.defend %>
+                                            </span>
+                                        </div>
+                                        <div class="col-4">
+                                            <h6 class="mb-1 fw-bolder text-white-50 fs-6">SPAWN <i
+                                                    class="bi bi-arrow-down-up"></i></h6>
+                                            <span class="inventory-stat-value catch-rate-color fs-4">
+                                                <%= pokemon.catch_rate %>
+                                            </span>
+                                        </div>
+                                        <div class="col-12 action-buttons-container">
+                                            <button class="btn-action-base btn-delete" type="button"
+                                                value="<%= pokemon.inventory_id %>">
+                                                <i class="bi bi-trash-fill me-2"></i> DELETE
+                                            </button>
+
+                                            <div class="pokemon_nickname d-flex justify-content-center">
+                                                <button class="btn-action-base btn-nickname btn-nickname-wrapper"
+                                                    type="button" value="<%= pokemon.inventory_id %>">
+                                                    <i class="bi bi-pencil-square me-2"></i> NICKNAME
+                                                </button>
+
+                                                <form class="update_nickname hidden" action="/pokemon/update_nickname"
+                                                    method="POST">
+                                                    <input type="hidden" value="<%= pokemon.inventory_id %>" name="id">
+                                                    <input type="text" placeholder="Nhập Biệt danh (Max 15 ký tự)"
+                                                        maxlength="15" value="<%= pokemon.nickname %>" name="nickname"
+                                                        required>
+                                                    <button type="submit">
+                                                        <i class="bi bi-save me-1"></i> LƯU
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <hr class="my-2 border-secondary">
+
+                                    <div class="text-start">
+                                        <p class="describe-text">
+                                            "<%= pokemon.describe %>"
+                                        </p>
+                                    </div>
+
+                                </div>
+
+                            </div>
                         </div>
 
-                        <div class="card-body p-3 text-center">
-                            <img src="<%= pokemon.avatar %>" class="inventory-avatar img-fluid mb-3" alt="<%= pokemon.name %> avatar">
-                            
-                            <div class="d-flex justify-content-between align-items-center mb-2">
-                                <p class="mb-0 fw-bold text-white">Level:</p>
-                                <span class="level-badge-inventory badge rounded-pill">
-                                    <%= pokemon.level %>
-                                </span>
-                            </div>
+                        <% }) %>
+                            <% } else { %>
+                                <div class="col-12 text-center">
+                                    <div class="alert alert-warning p-4 fw-bold"
+                                        style="background-color: #3d465c; color: #FFD700; border: 2px dashed #D9B300;">
+                                        <i class="bi bi-x-octagon-fill me-2"></i> Kho của bạn hiện chưa có Pokémon nào.
+                                        Hãy Bắt ngay!
+                                    </div>
+                                </div>
+                                <% } %>
 
-                            <hr class="my-2 border-secondary">
-                            
-                            <div class="row text-center mt-3">
-                                <div class="col-4 border-end border-secondary">
-                                    <h6 class="mb-1 fw-bolder text-white-50 fs-6">ATK <i class="bi bi-sword"></i></h6>
-                                    <span class="inventory-stat-value atack-color fs-4">
-                                        <%= pokemon.atack %>
-                                    </span>
-                                </div>
-                                <div class="col-4 border-end border-secondary">
-                                    <h6 class="mb-1 fw-bolder text-white-50 fs-6">DEF <i class="bi bi-shield-fill"></i></h6>
-                                    <span class="inventory-stat-value defend-color fs-4">
-                                        <%= pokemon.defend %>
-                                    </span>
-                                </div>
-                                <div class="col-4">
-                                    <h6 class="mb-1 fw-bolder text-white-50 fs-6">SPAWN <i class="bi bi-arrow-down-up"></i></h6>
-                                    <span class="inventory-stat-value catch-rate-color fs-4">
-                                        <%= pokemon.catch_rate %>
-                                    </span>
-                                </div>
-                            </div>
-                            
-                            <hr class="my-2 border-secondary">
-                            
-                            <div class="text-start">
-                                <p class="describe-text">
-                                    "<%= pokemon.describe %>"
-                                </p>
-                            </div>
-                          
-                        </div>
-                        
-                    </div>
-                </div>
-                
-                <% }) %>
-            <% } else { %>
-                <div class="col-12 text-center">
-                    <div class="alert alert-warning p-4 fw-bold" style="background-color: #3d465c; color: #FFD700; border: 2px dashed #D9B300;">
-                        <i class="bi bi-x-octagon-fill me-2"></i> Kho của bạn hiện chưa có Pokémon nào. Hãy Bắt ngay!
-                    </div>
-                </div>
-            <% } %>
-
+            </div>
         </div>
-    </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+            crossorigin="anonymous"></script>
+        <script>
+            const btn_delete = document.querySelectorAll('.btn-delete');
+
+            btn_delete.forEach(d => d.addEventListener("click", (e) => {
+                if (e.currentTarget.value) {
+                    deletePokemon(e.currentTarget.value);
+                }
+                else {
+                    alert(`Không tìm thấy id: ${e.currentTarget.value}`);
+                }
+            }))
+
+            async function deletePokemon(id) {
+                const isConfirm = confirm("Bạn có muốn xoá pokemon này không ?");
+                if (!isConfirm) {
+                    return;
+                }
+                await fetch(`/pokemon/delete/${id}`,
+                    {
+                        method: "DELETE"
+                    }
+                ).then(
+                    alert('Xoá pokemon thành công.'),
+                    location.reload()
+                );
+            }
+
+            // inventory.ejs (Trong thẻ <script>)
+
+            document.addEventListener("click", e => {
+                // Tìm phần tử cha gần nhất có class .btn-nickname-wrapper (nút NICKNAME)
+                const clickedNicknameButton = e.target.closest(".btn-nickname-wrapper"); // Dùng .btn-nickname-wrapper
+
+                // Chỉ thực thi nếu người dùng click vào nút NICKNAME
+                if (clickedNicknameButton) {
+                    const card = clickedNicknameButton.closest(".pokemon_nickname");
+                    const form = card.querySelector(".update_nickname");
+
+                    // 1. Ẩn nút NICKNAME
+                    clickedNicknameButton.classList.add("hidden");
+
+                    // 2. Hiện form nhập liệu (Đảm bảo form hiện ra)
+                    form.classList.remove("hidden");
+                }
+
+                // THÊM: Logic để hủy bỏ và quay lại (Rất quan trọng cho trải nghiệm người dùng)
+                // Nếu bạn muốn thêm nút HỦY (Cancel)
+                // Ví dụ: if (e.target.classList.contains("btn-cancel-nickname")) { ... }
+            });
+        </script>
 </body>
 
 </html>

@@ -62,6 +62,30 @@ async function getUserPokemons(userId) {
     }
 }
 
+async function deleteUserPokemons(inventory_id) {
+    const query = "DELETE FROM user_pokemons WHERE id = $1"
+    try {
+        const result = await pool.query(query, [inventory_id]);
+        return result.rowCount === 1
+    }
+    catch (err) {
+        console.error('Error delete user pokemons:', err);
+        return false;
+    }
+}
+
+async function updateNickname(inventory_id, nickname) {
+    const query = "UPDATE user_pokemons SET nickname = $1 WHERE id = $2";
+    try {
+        const result = await pool.query(query, [nickname, inventory_id]);
+        return result.rowCount === 1
+    }
+    catch (err) {
+        console.error('Error update pokemon nickname:', err);
+        return false;
+    }
+}
+
 async function getLastPokemon(userId) {
     const { rows } = await pool.query(`
         SELECT last_poke_name, last_poke_level, last_poke_catch_rate, 
@@ -181,5 +205,7 @@ module.exports = {
     getUserPokemons,
     getUserInfo,
     getHashedPassword,
-    updateUserInfo
+    updateUserInfo,
+    deleteUserPokemons,
+    updateNickname
 }
