@@ -8,6 +8,7 @@
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Poppins:wght@400;700;900&display=swap"
         rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="/images/hinhnen2.png">
     <title>Pokemon Super</title>
     <style>
         /* Thiết lập font cho toàn trang (sử dụng Poppins hiện đại, dễ đọc) */
@@ -384,8 +385,9 @@
             <h1 class="text-center mb-5 text-white fw-bold display-4"
                 style="text-shadow: 4px 4px 0 #000; letter-spacing: 2px;">
                 Chào mừng, <img src="<%= user.avatar || '/images/default_avatar.png' %>" alt="<%= user.name %> Avatar"
-                        class="user-avatar-navbar">
-                </a><%= user.name %>!
+                    class="user-avatar-navbar">
+                </a>
+                <%= user.name %>!
             </h1>
 
             <div class="alert alert-success time" style="width: 500px;" role="alert">
