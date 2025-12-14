@@ -33,6 +33,10 @@ app.set('view engine', 'ejs');
 
 app.use('/pokemon', inventoryRouter);
 
+app.get("/", (req, res) => {
+  res.redirect("/pokemon");
+});
+
 app.listen(port, (error) => {
     if (error) {
         throw error;
